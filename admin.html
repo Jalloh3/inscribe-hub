@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Store Admin — Barakah Essentials</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0E2350;--navy-700:#1D3E82;--gold:#EE9D00;--gold-100:#FBEBC8;--cream:#FAF7F1;--line:#E6E0D3;--ink:#1B1F2A;--muted:#5C6472;--red:#B23A3A;--green:#1F7A4D;}
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',sans-serif;background:var(--cream);color:var(--ink);line-height:1.5;}
+  h1,h2,h3{font-family:'Fraunces',serif;color:var(--navy);margin:0 0 10px;}
+  [hidden]{display:none !important;}
+  .top{background:var(--navy);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;}
+  .top strong{font-family:'Fraunces',serif;font-size:1.1rem;}
+  .top span{color:#cfd6e8;font-size:0.82rem;}
+  .wrap{max-width:1100px;margin:0 auto;padding:24px 18px 80px;}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:22px;margin-bottom:20px;}
+  .btn{border:1.5px solid transparent;border-radius:6px;padding:10px 18px;font-weight:600;font-size:0.9rem;cursor:pointer;font-family:inherit;}
+  .btn-primary{background:var(--navy);color:#fff;} .btn-gold{background:var(--gold);color:var(--navy);}
+  .btn-outline{background:#fff;border-color:var(--navy);color:var(--navy);} .btn-danger{background:#fff;border-color:var(--red);color:var(--red);}
+  .btn-sm{padding:6px 12px;font-size:0.8rem;}
+  .btn:disabled{opacity:0.55;cursor:not-allowed;}
+  label{display:block;font-size:0.8rem;font-weight:600;color:var(--navy);margin-bottom:4px;}
+  input,select,textarea{width:100%;border:1.5px solid var(--line);border-radius:6px;padding:10px 12px;font-family:inherit;font-size:0.92rem;background:var(--cream);}
+  textarea{min-height:70px;resize:vertical;}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .span2{grid-column:span 2;} .span4{grid-column:1/-1;}
+  .tabs{display:flex;gap:8px;margin-bottom:18px;}
+  .tab{border:1.5px solid var(--line);background:#fff;border-radius:20px;padding:9px 18px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--navy);}
+  .tab.active{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .pill{background:var(--gold);color:var(--navy);border-radius:10px;font-size:0.72rem;padding:1px 8px;margin-left:6px;}
+  table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+  th{text-align:left;font-size:0.74rem;text-transform:uppercase;letter-spacing:0.04em;color:var(--muted);padding:8px;border-bottom:1px solid var(--line);}
+  td{padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:middle;}
+  .thumb{width:44px;height:44px;border-radius:6px;object-fit:cover;background:var(--gold-100);display:block;}
+  .stock-input{width:78px;padding:6px 8px;}
+  .tag{font-size:0.72rem;padding:2px 9px;border-radius:10px;font-weight:600;}
+  .tag.off{background:#eee;color:#666;} .tag.on{background:#DDF3E7;color:var(--green);}
+  .tag.low{background:#FFF0D1;color:#9A5B00;} .tag.out{background:#F9DADA;color:var(--red);}
+  .order{border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;background:#fff;}
+  .order-head{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:8px;}
+  .order ul{margin:8px 0;padding-left:18px;font-size:0.88rem;}
+  .order .meta{font-size:0.85rem;color:var(--muted);}
+  .order-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:10px;}
+  .order-actions select{width:auto;padding:7px 10px;}
+  .status-pending{color:#9A5B00;} .status-confirmed{color:var(--navy-700);} .status-delivered{color:var(--green);} .status-cancelled{color:var(--red);}
+  .notice{background:var(--gold-100);border-radius:8px;padding:14px 16px;font-size:0.9rem;}
+  .login{max-width:400px;margin:60px auto;}
+  .err{color:var(--red);font-size:0.85rem;margin-top:10px;}
+  .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 18px;border-radius:8px;font-size:0.88rem;z-index:50;}
+  .imgrow{display:flex;gap:14px;align-items:center;}
+  .help{font-size:0.78rem;color:var(--muted);margin-top:4px;}
+  @media (max-width:760px){.grid{grid-template-columns:1fr 1fr;} .span2{grid-column:1/-1;} table,thead,tbody,tr,td,th{display:block;} thead{display:none;} tr{border:1px solid var(--line);border-radius:8px;padding:8px;margin-bottom:10px;} td{border:none;padding:4px 6px;}}
+</style>
+</head>
+<body>
+<div class="top"><div><strong>Barakah Essentials — Store admin</strong><br><span id="who"></span></div><button class="btn btn-outline btn-sm" id="logout" hidden type="button">Log out</button></div>
+
+<div class="wrap">
+  <div class="notice" id="setupNotice" hidden>
+    <strong>The store database isn't connected yet.</strong> Open <code>store-config.js</code>, paste in your Firebase details, and host these files on a real website (see SETUP.md). Until then this page can't log in.
+  </div>
+
+  <div class="card login" id="loginCard" hidden>
+    <h2>Admin login</h2>
+    <form id="loginForm">
+      <label for="email">Email</label><input id="email" type="email" autocomplete="username" required>
+      <div style="height:12px"></div>
+      <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+      <div style="height:16px"></div>
+      <button class="btn btn-primary" style="width:100%" type="submit">Log in</button>
+      <p class="err" id="loginErr" hidden></p>
+    </form>
+  </div>
+
+  <div id="dash" hidden>
+    <div class="tabs">
+      <button class="tab active" data-tab="products" type="button">Products</button>
+      <button class="tab" data-tab="orders" type="button">Orders <span class="pill" id="pendingPill" hidden>0</span></button>
+    </div>
+
+    <div id="tab-products">
+      <div class="card">
+        <h2 id="formTitle">Add a product</h2>
+        <form id="productForm">
+          <div class="grid">
+            <div class="span2"><label for="pName">Product name *</label><input id="pName" required maxlength="120"></div>
+            <div class="span2"><label for="pCategory">Category</label><input id="pCategory" list="catList" placeholder="e.g. Fragrance" maxlength="60"><datalist id="catList"></datalist></div>
+            <div class="span4"><label for="pDesc">Description</label><textarea id="pDesc" maxlength="500"></textarea></div>
+            <div><label for="pPrice">Price *</label><input id="pPrice" type="number" min="0" step="1" required></div>
+            <div><label for="pDiscount">Discount % (optional)</label><input id="pDiscount" type="number" min="0" max="100" step="1" value="0"></div>
+            <div><label for="pStock">Items available *</label><input id="pStock" type="number" min="0" step="1" required></div>
+            <div><label for="pActive">Visible to customers</label><select id="pActive"><option value="true">Yes — show it</option><option value="false">No — hide it</option></select></div>
+            <div class="span4">
+              <label for="pImage">Photo (optional)</label>
+              <div class="imgrow"><img class="thumb" id="imgPreview" alt="" hidden><div><input id="pImage" type="file" accept="image/*"><div class="help">Pick a photo from your phone or computer — it is shrunk automatically.</div><label style="margin-top:6px;font-weight:500"><input type="checkbox" id="removeImg" style="width:auto"> Remove current photo</label></div></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">
+            <button class="btn btn-gold" id="saveBtn" type="submit">Save product</button>
+            <button class="btn btn-outline" id="cancelEdit" type="button" hidden>Cancel editing</button>
+            <button class="btn btn-outline" id="seedBtn" type="button">Add starter products (hidden drafts)</button>
+          </div>
+          <p class="err" id="formErr" hidden></p>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Your products</h2>
+        <table>
+          <thead><tr><th></th><th>Product</th><th>Price</th><th>Items available</th><th>Status</th><th></th></tr></thead>
+          <tbody id="productRows"><tr><td colspan="6">Loading…</td></tr></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="tab-orders" hidden><div id="orderList"></div></div>
+  </div>
+</div>
+<div class="toast" id="toast" hidden></div>
+
+<script src="store-config.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+(function(){
+  const cfg = window.STORE_CONFIG || {};
+  const fbc = cfg.firebase || {};
+  const cur = cfg.currency || 'Le';
+  const lowAt = cfg.lowStockThreshold || 5;
+  const cc = cfg.defaultCountryCode || '';
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const money = n => cur + ' ' + Number(n).toLocaleString('en-US');
+  const finalPrice = p => Math.round(Number(p.price) * (1 - Math.min(100, Math.max(0, Number(p.discount) || 0)) / 100));
+  function toast(m){ const t = $('toast'); t.textContent = m; t.hidden = false; clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; }, 2600); }
+
+  if(typeof firebase === 'undefined' || !fbc.apiKey || /^YOUR_/.test(fbc.apiKey)){
+    $('setupNotice').hidden = false; return;
+  }
+  firebase.initializeApp(fbc);
+  const auth = firebase.auth(), db = firebase.firestore();
+  let products = [], orders = [], unsubP = null, unsubO = null, editId = null, currentImage = '';
+
+  // ---------- Auth ----------
+  auth.onAuthStateChanged(user => {
+    if(user){
+      $('loginCard').hidden = true; $('dash').hidden = false; $('logout').hidden = false; $('who').textContent = user.email;
+      startListeners();
+    } else {
+      stopListeners(); $('dash').hidden = true; $('logout').hidden = true; $('who').textContent = ''; $('loginCard').hidden = false;
+    }
+  });
+  $('loginForm').addEventListener('submit', async e => {
+    e.preventDefault(); $('loginErr').hidden = true;
+    try { await auth.signInWithEmailAndPassword($('email').value.trim(), $('password').value); }
+    catch(err){ $('loginErr').textContent = 'Login failed — check your email and password.'; $('loginErr').hidden = false; }
+  });
+  $('logout').addEventListener('click', () => auth.signOut());
+
+  function startListeners(){
+    stopListeners();
+    unsubP = db.collection('products').onSnapshot(s => {
+      products = s.docs.map(d => Object.assign({ id: d.id }, d.data()));
+      products.sort((a, b) => String(a.name).localeCompare(String(b.name)));
+      renderProducts();
+    }, err => toast('Could not load products: ' + err.code));
+    unsubO = db.collection('orders').orderBy('createdAt', 'desc').onSnapshot(s => {
+      orders = s.docs.map(d => Object.assign({ id: d.id }, d.data()));
+      renderOrders();
+    }, err => toast('Could not load orders: ' + err.code));
+  }
+  function stopListeners(){ if(unsubP) unsubP(); if(unsubO) unsubO(); unsubP = unsubO = null; }
+
+  // ---------- Tabs ----------
+  document.querySelectorAll('.tab').forEach(t => t.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x => x.classList.toggle('active', x === t));
+    $('tab-products').hidden = t.dataset.tab !== 'products';
+    $('tab-orders').hidden = t.dataset.tab !== 'orders';
+  }));
+
+  // ---------- Products ----------
+  function stockTag(p){
+    const s = Number(p.stock) || 0;
+    return s <= 0 ? '<span class="tag out">Sold out</span>' : s <= lowAt ? '<span class="tag low">Low</span>' : '';
+  }
+  function renderProducts(){
+    $('catList').innerHTML = Array.from(new Set(products.map(p => p.category).filter(Boolean))).map(c => '<option value="' + esc(c) + '">').join('');
+    if(!products.length){ $('productRows').innerHTML = '<tr><td colspan="6">No products yet. Add your first one above, or use "Add starter products".</td></tr>'; return; }
+    $('productRows').innerHTML = products.map(p => {
+      const d = Number(p.discount) || 0;
+      const price = d > 0 ? '<strong>' + money(finalPrice(p)) + '</strong><br><s style="color:#888">' + money(p.price) + '</s> <span class="tag low">-' + d + '%</span>' : '<strong>' + money(p.price) + '</strong>';
+      return '<tr>' +
+        '<td>' + (p.image ? '<img class="thumb" src="' + esc(p.image) + '" alt="">' : '<div class="thumb"></div>') + '</td>' +
+        '<td><strong>' + esc(p.name) + '</strong><br><span style="color:#777;font-size:0.8rem">' + esc(p.category || 'No category') + '</span></td>' +
+        '<td>' + price + '</td>' +
+        '<td><input class="stock-input" type="number" min="0" step="1" value="' + (Number(p.stock) || 0) + '" data-stock="' + esc(p.id) + '"> ' + stockTag(p) + '</td>' +
+        '<td><span class="tag ' + (p.active ? 'on' : 'off') + '">' + (p.active ? 'Visible' : 'Hidden') + '</span><br><button class="btn btn-outline btn-sm" style="margin-top:6px" data-toggle="' + esc(p.id) + '" type="button">' + (p.active ? 'Hide' : 'Show') + '</button></td>' +
+        '<td style="white-space:nowrap"><button class="btn btn-outline btn-sm" data-edit="' + esc(p.id) + '" type="button">Edit</button> <button class="btn btn-danger btn-sm" data-del="' + esc(p.id) + '" type="button">Delete</button></td></tr>';
+    }).join('');
+  }
+
+  $('productRows').addEventListener('change', async e => {
+    const inp = e.target.closest('[data-stock]'); if(!inp) return;
+    const v = parseInt(inp.value, 10);
+    if(isNaN(v) || v < 0){ toast('Enter a number of 0 or more'); renderProducts(); return; }
+    try { await db.collection('products').doc(inp.dataset.stock).update({ stock: v }); toast('Stock updated'); }
+    catch(err){ toast('Could not update stock'); }
+  });
+  $('productRows').addEventListener('click', async e => {
+    const edit = e.target.closest('[data-edit]'), del = e.target.closest('[data-del]'), tog = e.target.closest('[data-toggle]');
+    if(edit){ startEdit(edit.dataset.edit); }
+    else if(tog){
+      const p = products.find(x => x.id === tog.dataset.toggle);
+      try { await db.collection('products').doc(p.id).update({ active: !p.active }); } catch(err){ toast('Could not change visibility'); }
+    } else if(del){
+      const p = products.find(x => x.id === del.dataset.del);
+      if(confirm('Delete "' + p.name + '"? This cannot be undone. (To just stop selling it, use Hide instead.)')){
+        try { await db.collection('products').doc(p.id).delete(); toast('Deleted'); } catch(err){ toast('Could not delete'); }
+      }
+    }
+  });
+
+  function resizeImage(file, max){
+    return new Promise((resolve, reject) => {
+      const r = new FileReader();
+      r.onload = () => {
+        const img = new Image();
+        img.onload = () => {
+          const s = Math.min(1, max / Math.max(img.width, img.height));
+          const c = document.createElement('canvas'); c.width = Math.round(img.width * s); c.height = Math.round(img.height * s);
+          c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+          resolve(c.toDataURL('image/jpeg', 0.78));
+        };
+        img.onerror = reject; img.src = r.result;
+      };
+      r.onerror = reject; r.readAsDataURL(file);
+    });
+  }
+  $('pImage').addEventListener('change', async e => {
+    const f = e.target.files[0]; if(!f) return;
+    try { currentImage = await resizeImage(f, 600); $('imgPreview').src = currentImage; $('imgPreview').hidden = false; $('removeImg').checked = false; }
+    catch(err){ toast('That image could not be read'); }
+  });
+
+  function resetForm(){
+    editId = null; currentImage = ''; $('productForm').reset(); $('pDiscount').value = 0; $('pActive').value = 'true';
+    $('imgPreview').hidden = true; $('formTitle').textContent = 'Add a product'; $('cancelEdit').hidden = true; $('formErr').hidden = true;
+  }
+  function startEdit(id){
+    const p = products.find(x => x.id === id); if(!p) return;
+    editId = id; currentImage = p.image || '';
+    $('pName').value = p.name || ''; $('pCategory').value = p.category || ''; $('pDesc').value = p.description || '';
+    $('pPrice').value = p.price; $('pDiscount').value = Number(p.discount) || 0; $('pStock').value = Number(p.stock) || 0;
+    $('pActive').value = p.active ? 'true' : 'false'; $('removeImg').checked = false;
+    $('imgPreview').src = currentImage; $('imgPreview').hidden = !currentImage;
+    $('formTitle').textContent = 'Edit: ' + p.name; $('cancelEdit').hidden = false;
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+  $('cancelEdit').addEventListener('click', resetForm);
+
+  $('productForm').addEventListener('submit', async e => {
+    e.preventDefault(); $('formErr').hidden = true;
+    const price = Number($('pPrice').value), discount = Number($('pDiscount').value) || 0, stock = parseInt($('pStock').value, 10);
+    const fail = m => { $('formErr').textContent = m; $('formErr').hidden = false; };
+    if(!$('pName').value.trim()) return fail('Please enter a product name.');
+    if(isNaN(price) || price < 0) return fail('Price must be 0 or more.');
+    if(discount < 0 || discount > 100) return fail('Discount must be between 0 and 100.');
+    if(isNaN(stock) || stock < 0) return fail('Items available must be 0 or more.');
+    const data = {
+      name: $('pName').value.trim(), category: $('pCategory').value.trim(), description: $('pDesc').value.trim(),
+      price: Math.round(price), discount: Math.round(discount), stock: stock, active: $('pActive').value === 'true',
+      image: $('removeImg').checked ? '' : currentImage
+    };
+    $('saveBtn').disabled = true;
+    try {
+      if(editId) await db.collection('products').doc(editId).update(data);
+      else await db.collection('products').add(Object.assign({ createdAt: firebase.firestore.FieldValue.serverTimestamp() }, data));
+      toast(editId ? 'Product updated' : 'Product added'); resetForm();
+    } catch(err){ fail('Could not save: ' + (err.code || err.message)); }
+    $('saveBtn').disabled = false;
+  });
+
+  const starterItems = [
+    ['Saudi Kaftan', 'Clothing & Headwear', "A traditional white men's kaftan, part of the Eid Gift Package or available on its own."],
+    ['Shemaqh', 'Clothing & Headwear', 'A red-and-white checkered headscarf.'],
+    ['Kufi Cap', 'Clothing & Headwear', 'A woven prayer cap.'],
+    ['Reef Perfume (100ml)', 'Fragrance', 'Reef 36 — a long-lasting Arabian-style fragrance imported from Saudi Arabia.'],
+    ['Premium Prayer Mat', 'Prayer Essentials', 'A padded prayer mat presented in Al-Salah gift packaging.'],
+    ['Tasbeeh', 'Prayer Essentials', 'Prayer beads for dhikr, included in gift sets or sold separately.'],
+    ['Al-Salah Watch', 'Prayer Essentials', 'A water-resistant watch with a built-in prayer-time display.'],
+    ['Eid Gift Package', 'Gift Sets', 'The complete bundle — kaftan, prayer mat, tasbeeh, Reef perfume, shemaqh, cap, and Al-Salah watch — with free delivery in Freetown.']
+  ];
+  $('seedBtn').addEventListener('click', async () => {
+    if(!confirm('Add your 8 existing products as HIDDEN drafts (price 0, stock 0)? Then set each price and stock and click Show.')) return;
+    const batch = db.batch();
+    starterItems.forEach(([name, category, description]) => {
+      batch.set(db.collection('products').doc(), { name, category, description, price: 0, discount: 0, stock: 0, active: false, image: '', createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+    });
+    try { await batch.commit(); toast('Starter products added as hidden drafts'); } catch(err){ toast('Could not add starter products'); }
+  });
+
+  // ---------- Orders ----------
+  function waLink(o){
+    let d = String(o.phone || '').replace(/\D/g, '');
+    if(d.charAt(0) === '0' && cc) d = cc + d.slice(1);
+    const code = o.id.slice(0, 6).toUpperCase();
+    const text = 'Hello ' + o.customerName + ', this is Barakah Essentials about your order ' + code + ' (total ' + money(o.total) + '). Please confirm your delivery details and we will arrange payment.';
+    return 'https://wa.me/' + d + '?text=' + encodeURIComponent(text);
+  }
+  function renderOrders(){
+    const pending = orders.filter(o => o.status === 'pending').length;
+    $('pendingPill').textContent = pending; $('pendingPill').hidden = pending === 0;
+    if(!orders.length){ $('orderList').innerHTML = '<div class="card">No orders yet. New orders appear here the moment a customer places one.</div>'; return; }
+    $('orderList').innerHTML = orders.map(o => {
+      const when = o.createdAt && o.createdAt.toDate ? o.createdAt.toDate().toLocaleString() : 'just now';
+      const locked = o.status === 'cancelled';
+      return '<div class="order"><div class="order-head"><div><strong>Order ' + esc(o.id.slice(0, 6).toUpperCase()) + '</strong> <span class="status-' + esc(o.status) + '">● ' + esc(o.status) + '</span><div class="meta">' + esc(when) + '</div></div><div><strong>' + money(o.total) + '</strong></div></div>' +
+        '<div class="meta"><strong style="color:var(--ink)">' + esc(o.customerName) + '</strong> · ' + esc(o.phone) + (o.address ? ' · ' + esc(o.address) : '') + '</div>' +
+        '<ul>' + (o.items || []).map(i => '<li>' + esc(i.name) + ' × ' + i.qty + ' — ' + money(i.unitPrice * i.qty) + (i.discount ? ' (' + i.discount + '% off)' : '') + '</li>').join('') + '</ul>' +
+        (o.notes ? '<div class="meta">Note: ' + esc(o.notes) + '</div>' : '') +
+        '<div class="order-actions"><a class="btn btn-gold btn-sm" style="text-decoration:none" target="_blank" rel="noopener" href="' + esc(waLink(o)) + '">Message customer on WhatsApp</a>' +
+        '<select data-status="' + esc(o.id) + '"' + (locked ? ' disabled' : '') + '>' + ['pending', 'confirmed', 'delivered', 'cancelled'].map(s => '<option value="' + s + '"' + (s === o.status ? ' selected' : '') + '>' + s.charAt(0).toUpperCase() + s.slice(1) + '</option>').join('') + '</select>' +
+        (locked ? '<span class="meta">Cancelled — stock was returned.</span>' : '<span class="meta">Choosing Cancelled returns the items to stock.</span>') + '</div></div>';
+    }).join('');
+  }
+  $('orderList').addEventListener('change', async e => {
+    const sel = e.target.closest('[data-status]'); if(!sel) return;
+    const id = sel.dataset.status, status = sel.value, order = orders.find(o => o.id === id);
+    try {
+      if(status === 'cancelled'){
+        if(!confirm('Cancel this order and return its items to stock?')){ renderOrders(); return; }
+        await db.runTransaction(async tx => {
+          const oref = db.collection('orders').doc(id);
+          const osnap = await tx.get(oref);
+          if(osnap.data().status === 'cancelled') return;
+          const prefs = order.items.map(i => db.collection('products').doc(i.productId));
+          const psnaps = await Promise.all(prefs.map(r => tx.get(r)));
+          psnaps.forEach((ps, i) => { if(ps.exists) tx.update(ps.ref, { stock: (Number(ps.data().stock) || 0) + order.items[i].qty }); });
+          tx.update(oref, { status: 'cancelled' });
+        });
+        toast('Order cancelled — stock returned');
+      } else {
+        await db.collection('orders').doc(id).update({ status: status });
+        toast('Order marked ' + status);
+      }
+    } catch(err){ toast('Could not update the order'); renderOrders(); }
+  });
+})();
+</script>
+</body>
+</html>
