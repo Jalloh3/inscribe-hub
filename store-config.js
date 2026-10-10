@@ -6,10 +6,10 @@
 ------------------------------------------------------------------- */
 window.STORE_CONFIG = {
   firebase: {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyDQHEaxSsOcmMeJvwx1eMK46XYxPTn5Wq4",
+    authDomain: "barakah-essentials.firebaseapp.com",
+    projectId: "barakah-essentials",
+    appId: "1:389337576778:web:b2d31060604ae40d197db3"
   },
   currency: "Le",                    // shown before every price
   whatsappLink: "https://rb.gy/5b6zuz",
