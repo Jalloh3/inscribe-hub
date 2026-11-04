@@ -1,0 +1,39 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // >>> Replace with the email of the admin account you create in Firebase Authentication
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'OWNER_EMAIL@example.com';
+    }
+
+    // A customer may ONLY lower the stock number of a product (that is what an order does).
+    function isStockDecrement() {
+      return request.resource.data.diff(resource.data).affectedKeys().hasOnly(['stock'])
+        && request.resource.data.stock is int
+        && request.resource.data.stock >= 0
+        && request.resource.data.stock < resource.data.stock;
+    }
+
+    match /products/{productId} {
+      allow read: if resource.data.active == true || isAdmin();
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || isStockDecrement();
+    }
+
+    function validOrder() {
+      let d = request.resource.data;
+      return d.keys().hasAll(['customerName', 'phone', 'items', 'total', 'status', 'createdAt'])
+        && d.status == 'pending'
+        && d.createdAt == request.time
+        && d.customerName is string && d.customerName.size() > 1 && d.customerName.size() < 100
+        && d.phone is string && d.phone.size() > 5 && d.phone.size() < 30
+        && d.items is list && d.items.size() > 0 && d.items.size() <= 30;
+    }
+
+    match /orders/{orderId} {
+      allow create: if validOrder();
+      allow read, update, delete: if isAdmin();
+    }
+  }
+}

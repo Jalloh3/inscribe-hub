@@ -1254,43 +1254,44 @@
 
   // Places an order inside ONE transaction: checks stock, lowers stock, saves the order.
   // If two customers order the last item at once, only one succeeds.
-  async function placeOrder(db, cart, customer){
-    const orderRef = db.collection('orders').doc();
-    await db.runTransaction(async tx => {
-      const refs = cart.map(c => db.collection('products').doc(c.id));
-      const snaps = await Promise.all(refs.map(r => tx.get(r)));
-      const lines = [];
-      let total = 0;
-      const updates = [];
-      snaps.forEach((snap, i) => {
-        const c = cart[i];
-        if(!snap.exists) throw new Error('UNAVAILABLE:An item');
-        const p = snap.data();
-        if(p.active === false) throw new Error('UNAVAILABLE:' + p.name);
-        const stock = Number(p.stock) || 0;
-        if(stock < c.qty) throw new Error('STOCK:' + p.name + ':' + stock + ':' + c.id);
-        const unit = finalPrice(p);
-        total += unit * c.qty;
-        lines.push({ productId: c.id, name: p.name, qty: c.qty, unitPrice: unit, listPrice: Number(p.price), discount: Number(p.discount) || 0 });
-        updates.push([snap.ref, stock - c.qty]);
-      });
-      updates.forEach(([ref, newStock]) => tx.update(ref, { stock: newStock }));
-      tx.set(orderRef, {
-        customerName: customer.name,
-        phone: customer.phone,
-        address: customer.address || '',
-        notes: customer.notes || '',
-        items: lines,
-        total: total,
-        status: 'pending',
-        createdAt: firebase.firestore.FieldValue.serverTimestamp()
-      });
-    });
-    return orderRef.id;
+  async function placeOrder(db, cart, customer) {
+  const response = await fetch(
+    "http://localhost:3000/api/orders",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        customer,
+        items: cart.map(item => ({
+          id: item.id,
+          qty: item.qty
+        }))
+      })
+    }
+  );
+
+  const result = await response.json();
+
+  if (!response.ok) {
+    if (result.code === "STOCK") {
+      throw new Error(
+        `STOCK:${result.name}:${result.available}:${result.productId}`
+      );
+    }
+
+    if (result.code === "UNAVAILABLE") {
+      throw new Error("UNAVAILABLE:An item");
+    }
+
+    throw new Error(
+      result.error || result.message || "Unable to place order."
+    );
   }
 
-  const bagIcon = '<svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
-
+  return result;
+}
   // Shown only until the database is connected (see SETUP.md)
   const starter = [
     { id:'s1', name:'Saudi Kaftan', category:'Clothing & Headwear', description:"A traditional white men's kaftan, part of the Eid Gift Package or available on its own." },
@@ -1315,7 +1316,7 @@
     const t = el('toast'); t.textContent = msg; t.hidden = false;
     clearTimeout(toast._t); toast._t = setTimeout(() => { t.hidden = true; }, 2800);
   }
-
+const bagIcon = '<svg viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>';
   // ---------- Catalog ----------
   function cardHTML(p){
     const hasPrice = Number(p.price) > 0;
@@ -1482,9 +1483,9 @@
     const summary = snapshotCart.map(c => { const p = byId(c.id); return { name: p ? p.name : 'Item', qty: c.qty, unit: p ? finalPrice(p) : 0 }; });
     const totalShown = cartTotal();
     try {
-      const orderId = await placeOrder(db, snapshotCart, customer);
+      const order = await placeOrder(db, snapshotCart, customer);
       cart = []; saveCart(); updateFab();
-      showConfirmation(orderId, summary, totalShown);
+      showConfirmation(order.orderId, summary, order.total);
     } catch(err){
       const m = String(err && err.message || '');
       let msg = 'We could not place your order. Please check your connection and try again, or order on WhatsApp.';
