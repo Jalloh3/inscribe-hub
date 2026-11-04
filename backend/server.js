@@ -16,13 +16,21 @@ app.use(cors({
 app.use(express.json({ limit: "100kb" }));
 
 // Firebase Admin connection
-const serviceAccount = await import("./serviceAccountKey.json", {
+let serviceAccount;
+
+if (process.env.FIREBASE_SERVICE_ACCOUNT) {
+  serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+} else {
+  const localAccount = await import("./serviceAccountKey.json", {
     with: { type: "json" }
-});
+  });
+
+  serviceAccount = localAccount.default;
+}
 
 initializeApp({
-    credential: cert(serviceAccount.default),
-    projectId: process.env.FIREBASE_PROJECT_ID
+  credential: cert(serviceAccount),
+  projectId: process.env.FIREBASE_PROJECT_ID
 });
 
 const db = getFirestore();
