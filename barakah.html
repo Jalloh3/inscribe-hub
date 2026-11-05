@@ -1256,7 +1256,7 @@
   // If two customers order the last item at once, only one succeeds.
   async function placeOrder(db, cart, customer) {
   const response = await fetch(
-    "http://localhost:3000/api/orders",
+    "https://inscribe-hub.onrender.com/api/orders",
     {
       method: "POST",
       headers: {
