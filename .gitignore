@@ -4,3 +4,4 @@ backend/.env.*
 !backend/.env.example
 backend/serviceAccountKey.json
 backend/*-service-account.json
+.firebase/
