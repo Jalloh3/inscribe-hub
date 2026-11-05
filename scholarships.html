@@ -223,7 +223,7 @@
     padding:26px;
     margin-top:36px;
     display:grid;
-    grid-template-columns:repeat(4,1fr) auto;
+    grid-template-columns:repeat(5,1fr) auto;
     gap:16px;
     align-items:end;
   }
@@ -260,6 +260,12 @@
     padding:4px 10px;border-radius:20px;
     white-space:nowrap;flex-shrink:0;
   }
+  .scholar-status{display:inline-block;font-size:0.72rem;font-weight:700;padding:4px 9px;border-radius:20px;margin:0 0 10px;}
+  .scholar-status.status-open{background:#e5f4ea;color:#17633a;}
+  .scholar-status.status-upcoming{background:#fff3d6;color:#805600;}
+  .scholar-status.status-closed{background:#f0f0f0;color:#555;}
+  .scholar-verified{font-size:0.75rem;color:var(--muted);margin-top:8px;}
+  .scholar-funding-detail{font-size:0.86rem;color:var(--navy-900);background:var(--paper);padding:10px 12px;border-radius:6px;margin:12px 0;}
   .scholar-card p.desc{font-size:0.92rem;margin:12px 0;}
   .scholar-col-title{
     font-size:0.78rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;
@@ -698,9 +704,9 @@
 
 <section class="scholar" id="scholarships">
   <div class="wrap">
-    <span class="scholar-tag">Scholarship Hub · AI-Powered Matching</span>
-    <h2>Every major scholarship, one place to search.</h2>
-    <p class="lead">Tell the Scholarship Hub your study level, field, and where you're from. It checks your profile against real eligibility rules — including Saudi government and other Arab-region scholarships — and shows only what you actually qualify for, with the criteria and requirements laid out upfront.</p>
+    <span class="scholar-tag">Scholarship Hub · 2027 opportunities</span>
+    <h2>Find verified scholarships and current application windows.</h2>
+    <p class="lead">Browse international scholarships with verified deadlines, funding details, eligibility requirements, and official application links. Filter by study level, field, funding type, region, and application status. Each listing shows when it was last checked.</p>
 
     <div class="scholar-filters">
       <div class="scholar-field">
@@ -740,13 +746,22 @@
           <option value="Global">Open worldwide</option>
         </select>
       </div>
+      <div class="scholar-field">
+        <label for="f-status">Application status</label>
+        <select id="f-status">
+          <option value="any">Any status</option>
+          <option value="Open">Open now</option>
+          <option value="Upcoming">Upcoming</option>
+          <option value="Closed">Closed</option>
+        </select>
+      </div>
       <button class="btn btn-gold" id="scholarSearch" type="button">Find Matches</button>
     </div>
     <p class="scholar-meta" id="scholarCount"></p>
 
     <div class="scholar-results" id="scholarResults"></div>
 
-    <p class="scholar-disclaimer">Listings are a starting sample of well-known, currently running programmes — reviewed and refreshed by our team. All Saudi government scholarships are applied for through the official Study in Saudi platform (studyinsaudi.sa), not through individual university websites. Deadlines shift year to year, so we confirm the live date with you before you apply. Want a hand with the full application? <a href="contact.html" style="color:#fff;text-decoration:underline;">Talk to our scholarship team</a>.</p>
+    <p class="scholar-disclaimer">Scholarship status and deadlines were checked against official programme pages on 5 November 2026. Dates and eligibility can change; always read the official source before applying. Funding packages differ: some awards do not cover all living, travel, or overseas tuition costs. Want a hand with the full application? <a href="contact.html" style="color:#fff;text-decoration:underline;">Talk to our scholarship team</a>.</p>
   </div>
 </section>
 
@@ -861,292 +876,214 @@
 // Scholarship Hub filter (only runs where the filter UI exists)
 (function(){
   if(!document.getElementById('scholarResults')) return;
-  const scholarships = [
+  const scholarships =   [
     {
-      name: "Chevening Scholarship",
-      country: "United Kingdom · Government-funded",
-      levels: ["Master's"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Opens annually in August, closes in October",
-      desc: "A one-year, fully funded UK master's degree for future leaders, run by the UK government.",
-      criteria: [
-        "Citizen of a Chevening-eligible country",
-        "At least 2 years (2,800 hours) of work experience",
-        "Undergraduate degree equivalent to a UK 2:1",
-        "Return home for 2 years after the award"
+      "name": "Europubhealth+ Erasmus Mundus Joint Master",
+      "country": "Europe · Eight-university public health consortium",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Offers from 3 eligible UK master's courses",
-        "Two references",
-        "Personal essays on leadership & career plans"
+      "field": "STEM & Health",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "8 January 2027 · 13:00 CET (Erasmus Mundus scholarship deadline)",
+      "verifiedOn": "5 November 2026",
+      "desc": "Two-year European Master in Public Health. The Erasmus Mundus scholarship is awarded to selected top-ranked applicants worldwide.",
+      "fundingDetail": "Up to €1,400 per month, full participation-fee coverage, and health and accident insurance. Awards are limited and highly competitive.",
+      "criteria": [
+        "Applicants from all nationalities may compete for Erasmus Mundus scholarships.",
+        "A relevant previous university degree and the programme's language requirements are required.",
+        "Selection considers academic results, public-health or healthcare experience, motivation, and international experience.",
+        "The consortium reports that fewer than 1% of applicants receive an Erasmus Mundus scholarship."
       ],
-      link: "https://www.chevening.org/"
+      "requirements": [
+        "Submit the complete application through the official Europubhealth+ application platform.",
+        "Provide degree documents, transcripts, and the required language-test evidence.",
+        "Read the 2027 applicant instructions and confirm the accepted degree backgrounds before applying."
+      ],
+      "link": "https://www.europubhealth.org/application-procedure/"
     },
     {
-      name: "Commonwealth Master's Scholarship",
-      country: "United Kingdom · Commonwealth Scholarship Commission",
-      levels: ["Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Commonwealth",
-      deadline: "Opens annually in November, closes in December",
-      desc: "Fully funded UK postgraduate study for students from developing Commonwealth countries, including Sierra Leone.",
-      criteria: [
-        "Citizen of an eligible Commonwealth country (Sierra Leone included)",
-        "First-class or upper-second-class first degree",
-        "Unable to fund study without this award",
-        "Committed to development impact at home"
+      "name": "Human Response — Erasmus Mundus Joint Master",
+      "country": "Portugal · Norway · Uganda and partner locations",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Admission offer from a UK university course",
-        "Academic transcripts & references",
-        "Statement of how the course supports development"
+      "field": "STEM & Health",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "7 January 2027 · scholarship application deadline",
+      "verifiedOn": "5 November 2026",
+      "desc": "A two-year joint Master's focused on coordinated humanitarian response, health, and displacement. Particularly relevant to public health and humanitarian work.",
+      "fundingDetail": "15 Erasmus Mundus scholarships per edition. Each scholarship provides €1,400 per month, no tuition fees for scholarship holders, and 24-month insurance. Travel, housing, living, and visa costs still need careful planning.",
+      "criteria": [
+        "A Bachelor's degree equivalent to at least 180 ECTS is required.",
+        "Applicants must meet the programme's English-language requirements.",
+        "Previous Erasmus Mundus Joint Master scholarship holders cannot receive another EMJM scholarship."
       ],
-      link: "https://cscuk.fcdo.gov.uk/"
+      "requirements": [
+        "Passport, photograph, degree certificate, and full academic transcript.",
+        "CV, statement of purpose, and two signed recommendation letters.",
+        "English test certificate unless an official exemption applies. IELTS Academic minimum: 6.5 overall, no band below 5.5; other accepted tests have their own minimums."
+      ],
+      "link": "https://humanresponse.eu/applications1/"
     },
     {
-      name: "Mastercard Foundation Scholars Program",
-      country: "Multiple partner universities · Africa-focused",
-      levels: ["Undergraduate", "Master's"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Africa",
-      deadline: "Deadlines vary by partner university",
-      desc: "Africa's largest scholarship initiative, covering tuition and living costs for talented students with limited financial means.",
-      criteria: [
-        "African national",
-        "Under 29 for undergraduate, under 35 for master's",
-        "Demonstrated financial need",
-        "Record of leadership or community service"
+      "name": "EMMIR — European Master in Migration and Intercultural Relations",
+      "country": "Europe · Eight partner institutions",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Admission to a Mastercard Foundation partner university",
-        "Academic transcripts",
-        "Personal statement on community impact"
+      "field": "Business & Social Science",
+      "funding": "Partial funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "20 December 2026 · scholarship and non-fee-paying places",
+      "verifiedOn": "5 November 2026",
+      "desc": "A two-year Erasmus Mundus Master's on migration and intercultural relations. It may suit applicants interested in migration, social policy, community health, and development.",
+      "fundingDetail": "The programme confirms scholarship and non-fee-paying study places for this intake. Check the official funding information for the exact award and conditions; do not assume all living costs are covered.",
+      "criteria": [
+        "The 2027–2029 application round is open to international applicants.",
+        "Applicants must meet the programme's academic and language entry requirements.",
+        "The programme makes the final eligibility decision after reviewing a complete application."
       ],
-      link: "https://mastercardfdn.org/en/programs/young-people-thriving/scholars-program/"
+      "requirements": [
+        "Follow the official application procedure and read the entry requirements.",
+        "Prepare degree certificates, transcripts, CV, motivation statement, and language evidence as specified by the programme."
+      ],
+      "link": "https://www.emmir.org/applications"
     },
     {
-      name: "Fulbright Foreign Student Program",
-      country: "United States · Government-funded",
-      levels: ["Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Opens annually early in the year; check your local commission",
-      desc: "Fully funded graduate study and research in the United States, run through local Fulbright commissions and U.S. embassies worldwide.",
-      criteria: [
-        "Bachelor's degree completed before travel",
-        "Strong academic record in your field",
-        "English proficiency (TOEFL/IELTS)",
-        "Intent to return home after the program"
+      "name": "Imperial College London — School of Public Health Master's Scholarships",
+      "country": "United Kingdom · Imperial College London",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Study/research proposal",
-        "Academic & professional references",
-        "Standardised test scores where required"
+      "field": "STEM & Health",
+      "funding": "Partial funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "30 April 2027 · 23:59 UK time",
+      "verifiedOn": "5 November 2026",
+      "desc": "Five 2027-entry awards across Public Health, Epidemiology, Health Data Analytics and Machine Learning, and the online MPH.",
+      "fundingDetail": "On-campus awards cover tuition up to the UK home-fee rate; overseas students pay any remaining fee balance. One online MPH award covers the full tuition fee for either home or overseas students. Living costs are not included.",
+      "criteria": [
+        "Open to applicants from the UK, EU, and overseas.",
+        "You must first apply to an eligible School of Public Health Master's programme for October 2027 entry.",
+        "Selection considers financial need, academic potential, relevant experience, references, and career plans.",
+        "The scholarship does not require every applicant to have a first-class degree; course admission requirements still apply."
       ],
-      link: "https://foreign.fulbrightonline.org/"
+      "requirements": [
+        "Submit the eligible Master's course application first.",
+        "Complete the separate School of Public Health scholarship application.",
+        "For MSc Health Data Analytics and Machine Learning, check the course's stated academic entry standard before applying."
+      ],
+      "link": "https://www.imperial.ac.uk/school-public-health/study/postgraduate/funding-and-scholarships/"
     },
     {
-      name: "Islamic University of Madinah Scholarship",
-      country: "Saudi Arabia · Government-funded",
-      levels: ["Undergraduate", "Master's"],
-      field: "Islamic & Arabic Studies",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Undergraduate: closes mid-June · Master's: rolling",
-      desc: "Fully funded study in Madinah covering tuition, furnished housing, a monthly stipend, and healthcare, for Islamic and Arabic studies.",
-      criteria: [
-        "Non-Saudi national",
-        "Aged 17–25 for undergraduate applicants",
-        "Good standing in previous studies",
-        "Willingness to relocate to Madinah, Saudi Arabia"
+      "name": "HDR UK Master's Scholarship Programme",
+      "country": "United Kingdom · Health Data Research UK",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Completed academic transcripts, attested",
-        "Passport copy & personal photos",
-        "Apply through the Study in Saudi platform"
+      "field": "STEM & Health",
+      "funding": "Partial funding",
+      "region": "Global",
+      "status": "Upcoming",
+      "deadline": "2027 applications expected around March 2027 · exact dates not yet announced",
+      "verifiedOn": "5 November 2026",
+      "desc": "Funding for UK Master's study in Health Data Science or a closely related programme with a significant health-data component.",
+      "fundingDetail": "Up to £10,000 paid towards tuition fees. It does not cover international fee differences or living costs, so additional funding is needed.",
+      "criteria": [
+        "International students are welcome to apply.",
+        "Applicants need a confirmed place on an eligible UK Master's programme.",
+        "The programme must be in Health Data Science or closely related, with substantial health-data content."
       ],
-      link: "https://studyinsaudi.sa/en"
+      "requirements": [
+        "Secure a confirmed place on an eligible Master's programme.",
+        "Prepare a health-data research project proposal with an eligible charity or research partner as required by the scheme.",
+        "Check the 2027 guidance when applications open."
+      ],
+      "link": "https://www.hdruk.ac.uk/study-and-train/study/postgraduate/masters-programme/"
     },
     {
-      name: "King Abdulaziz University Scholarship",
-      country: "Saudi Arabia · Government-funded",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Applications accepted year-round via the Study in Saudi platform",
-      desc: "Fully funded study across engineering, business, humanities, IT and more, with a monthly stipend, accommodation, healthcare, and return airfare.",
-      criteria: [
-        "Non-Saudi national meeting programme entry requirements",
-        "Good academic standing in prior studies",
-        "Medical fitness to relocate to Jeddah, Saudi Arabia",
-        "Separate male and female campuses; check programme availability"
+      "name": "Commonwealth Master's Scholarship",
+      "country": "United Kingdom · Commonwealth Scholarship Commission",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Attested academic transcripts & certificates",
-        "Passport copy",
-        "Apply through the Study in Saudi platform"
+      "field": "Any field",
+      "funding": "Full funding",
+      "region": "Commonwealth",
+      "status": "Closed",
+      "deadline": "2027/28 applications closed · 20 October 2026",
+      "verifiedOn": "5 November 2026",
+      "desc": "Fully funded taught Master's study in the UK for eligible citizens of developing Commonwealth countries. Sierra Leone is on the eligible-country list.",
+      "fundingDetail": "Commonwealth Master's awards are fully funded. Check the official award conditions for the exact support attached to the next application cycle.",
+      "criteria": [
+        "Sierra Leone is an eligible country.",
+        "Applicants must normally hold a first degree of at least upper-second-class (2:1) standard or an equivalent qualification.",
+        "Applicants must be unable to afford UK study without the award and demonstrate development impact."
       ],
-      link: "https://studyinsaudi.sa/en"
+      "requirements": [
+        "The 2027/28 application window has closed; prepare for a future cycle only after its dates and rules are announced.",
+        "For the next cycle, check the eligible-country list, academic classification, residency, and return-home requirements."
+      ],
+      "link": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/"
     },
     {
-      name: "KAUST Scholarship",
-      country: "Saudi Arabia · King Abdullah University of Science & Technology",
-      levels: ["Master's", "PhD"],
-      field: "STEM & Health",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Rolling admission rounds; apply early for full consideration",
-      desc: "Full tuition, a living allowance, on-campus housing, and medical coverage for graduate research in science, engineering, and technology.",
-      criteria: [
-        "Open to all nationalities",
-        "Bachelor's degree (for master's) or master's degree (for PhD) in a related field",
-        "English proficiency (TOEFL 79+ or IELTS 6.5+)",
-        "Meets entry requirements of the chosen research programme"
+      "name": "Chevening Scholarship — Sierra Leone",
+      "country": "United Kingdom · UK Government",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Academic transcripts & references",
-        "Statement of research interest",
-        "Apply through the Study in Saudi platform"
+      "field": "Any field",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Closed",
+      "deadline": "2027/28 applications closed · next cycle not announced",
+      "verifiedOn": "5 November 2026",
+      "desc": "The UK Government's fully funded one-year Master's scholarship for future leaders. The official Sierra Leone page confirms the 2027/28 round is closed.",
+      "fundingDetail": "Chevening is a fully funded award. Check the official country page for the next cycle's exact benefits, eligibility, and dates.",
+      "criteria": [
+        "Sierra Leone has a dedicated Chevening scholarship country page.",
+        "Applicants must meet Chevening's current eligibility criteria, including its work-experience and course requirements.",
+        "The 2027/28 application round is closed."
       ],
-      link: "https://studyinsaudi.sa/en"
+      "requirements": [
+        "Do not submit through unofficial agents or third-party forms.",
+        "Monitor the official Sierra Leone page for the next opening date and updated rules."
+      ],
+      "link": "https://www.chevening.org/scholarship/sierra-leone/"
     },
     {
-      name: "Al-Azhar University Scholarship",
-      country: "Egypt · Government-funded",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Islamic & Arabic Studies",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Apply through your home country's Egyptian embassy; check the annual window",
-      desc: "One of the world's oldest Islamic institutions, offering full scholarships for Shariah, Quranic sciences, Hadith, Arabic and Islamic history, with a free preparatory Arabic course for non-Arabic speakers.",
-      criteria: [
-        "Muslim applicant from an eligible country",
-        "Undergraduate: 18–25 years old · Master's: under 35",
-        "Good physical and mental health (medical certificate required)",
-        "Prior qualification in Shariah/Islamic studies for some tracks"
+      "name": "Türkiye Scholarships — Graduate Programme",
+      "country": "Türkiye · Government-funded",
+      "levels": [
+        "Master's",
+        "PhD"
       ],
-      requirements: [
-        "Application channelled through the Egyptian embassy or Islamic affairs council in your country",
-        "Attested certificates & proof of Islamic identity (letter from a mosque or Islamic centre)",
-        "Recommendation letters"
+      "field": "Any field",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Upcoming",
+      "deadline": "Annual application window: 10 January–20 February; confirm the 2027 call when published",
+      "verifiedOn": "5 November 2026",
+      "desc": "Government scholarship for graduate study in Türkiye. Available graduate fields include social sciences, humanities, natural sciences, and engineering.",
+      "fundingDetail": "Includes university placement, tuition, monthly stipend, accommodation, health insurance, Turkish-language course, and a one-off flight ticket.",
+      "criteria": [
+        "Open to eligible international applicants; check the current nationality and age rules.",
+        "Available departments depend on the applicant's previous academic background.",
+        "Important: the official programme states that it does not award graduate scholarships in health sciences."
       ],
-      link: "https://azhar.eg/"
-    },
-    {
-      name: "Hamad Bin Khalifa University Scholarship",
-      country: "Qatar · HBKU, Education City, Doha",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Typically closes 1 February each year for international applicants",
-      desc: "Full or partial tuition coverage plus housing, airfare, and a monthly stipend, awarded automatically to admitted students — no separate scholarship application needed.",
-      criteria: [
-        "Open to all nationalities",
-        "Admission offer to an HBKU undergraduate, master's, PhD, or law programme",
-        "Strong academic record",
-        "English proficiency (IELTS or equivalent, where required)"
+      "requirements": [
+        "Prepare passport, diploma, transcripts, and any required language or programme documents.",
+        "Use the official Türkiye Scholarships application system during the published application period.",
+        "Check whether the selected department accepts your previous degree."
       ],
-      requirements: [
-        "Complete university admission application first",
-        "Academic transcripts",
-        "Personal statement & recommendation letter"
-      ],
-      link: "https://www.hbku.edu.qa/"
-    },
-    {
-      name: "American University of Sharjah Scholarship",
-      country: "United Arab Emirates · Merit-based",
-      levels: ["Undergraduate", "Master's"],
-      field: "Any field",
-      funding: "Partial funding",
-      region: "Middle East & Gulf",
-      deadline: "Priority deadlines each admission cycle; apply early",
-      desc: "Merit-based tuition discounts of roughly 20–80% for high-achieving students across engineering, business, arts, and more, on a modern UAE campus.",
-      criteria: [
-        "Open to all nationalities",
-        "Strong secondary school or undergraduate academic record",
-        "Admission offer to AUS required first",
-        "Renewable each year if grades are maintained"
-      ],
-      requirements: [
-        "Academic transcripts",
-        "Standardised test scores where applicable",
-        "Online scholarship application after admission"
-      ],
-      link: "https://www.aus.edu/"
-    },
-    {
-      name: "DAAD Scholarship",
-      country: "Germany · German Academic Exchange Service",
-      levels: ["Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Deadlines vary by programme; most close 6–12 months before the start date",
-      desc: "Germany's national academic exchange agency funds postgraduate study and research, with a monthly stipend, health insurance, and a travel allowance.",
-      criteria: [
-        "Completed a first degree (bachelor's) before the programme begins",
-        "Strong academic record",
-        "German or English language proficiency, depending on the programme",
-        "Some programmes set an age limit (around 32 for master's, 36 for PhD)"
-      ],
-      requirements: [
-        "Search the DAAD scholarship database for a matching programme",
-        "University admission or nomination, depending on the programme",
-        "Transcripts, references, and a motivation letter"
-      ],
-      link: "https://www.daad.de/en/studying-in-germany/scholarships/daad-scholarships/"
-    },
-    {
-      name: "Türkiye Bursları (Turkey Scholarships)",
-      country: "Turkey · Government-funded",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Opens annually, typically January to February",
-      desc: "A fully funded Turkish government programme covering tuition, a monthly stipend, accommodation, health insurance, a Turkish language course, and a return flight.",
-      criteria: [
-        "Open to citizens of almost every country (not Turkish nationals)",
-        "Undergraduate: generally under 21 with strong secondary school grades",
-        "Master's/PhD: strong first degree, generally under 30 for master's",
-        "Not already enrolled at a Turkish university at the same level"
-      ],
-      requirements: [
-        "Apply online through the Türkiye Bursları portal",
-        "Identity document, diploma, and transcripts",
-        "Language test scores where the chosen programme requires them"
-      ],
-      link: "https://www.turkiyeburslari.gov.tr/"
-    },
-    {
-      name: "Chinese Government Scholarship (CSC)",
-      country: "China · China Scholarship Council",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Varies by route — embassy applications typically close by April",
-      desc: "A fully funded programme covering tuition, accommodation or a housing allowance, basic health insurance, and a monthly stipend, at partner universities across China.",
-      criteria: [
-        "Non-Chinese citizen in good health",
-        "Undergraduate: generally under 25 · Master's: under 35 · PhD: under 40",
-        "Good academic standing",
-        "Not holding another Chinese-government-funded scholarship at the same time"
-      ],
-      requirements: [
-        "Apply via a Chinese embassy (Type A) or directly to a partner university (Type B)",
-        "Notarised transcripts and highest diploma",
-        "Foreigner Physical Examination Form and passport copy"
-      ],
-      link: "https://www.chinesescholarshipcouncil.com/"
+      "link": "https://www.turkiyeburslari.gov.tr/fulltimeprograms"
     }
   ];
 
@@ -1164,16 +1101,18 @@
     const field = document.getElementById('f-field').value;
     const funding = document.getElementById('f-funding').value;
     const region = document.getElementById('f-region').value;
+    const status = document.getElementById('f-status').value;
 
     const matches = scholarships.filter(s => {
       const levelOk = level === 'any' || s.levels.includes(level);
       const fundingOk = funding === 'any' || s.funding === funding;
       const regionOk = region === 'any' || s.region === region;
-      return levelOk && fieldMatches(s.field, field) && fundingOk && regionOk;
+      const statusOk = status === 'any' || s.status === status;
+      return levelOk && fieldMatches(s.field, field) && fundingOk && regionOk && statusOk;
     });
 
     countEl.textContent = matches.length
-      ? `Showing ${matches.length} of ${scholarships.length} scholarships`
+      ? `Showing ${matches.length} of ${scholarships.length} verified listings`
       : '';
 
     if(matches.length === 0){
@@ -1190,329 +1129,302 @@
           </div>
           <span class="badge">${s.funding}</span>
         </div>
+        <span class="scholar-status status-${s.status.toLowerCase()}">${s.status === "Open" ? "Open now" : s.status}</span>
         <p class="desc">${s.desc}</p>
+        <div class="scholar-funding-detail"><strong>Funding:</strong> ${s.fundingDetail}</div>
         <div class="scholar-col-title">Criteria</div>
         <ul>${s.criteria.map(c => `<li>${c}</li>`).join('')}</ul>
         <div class="scholar-col-title">Requirements</div>
         <ul>${s.requirements.map(r => `<li>${r}</li>`).join('')}</ul>
         <div class="scholar-card-footer">
           <span class="scholar-deadline">${s.deadline}</span>
-          <a href="${s.link}" target="_blank" rel="noopener">Official site</a>
+          <a href="${s.link}" target="_blank" rel="noopener noreferrer">Official details / apply</a>
         </div>
+        <div class="scholar-verified">Last checked: ${s.verifiedOn}</div>
       </div>
     `).join('');
   }
 
   document.getElementById('scholarSearch').addEventListener('click', renderScholarships);
+  document.querySelectorAll('.scholar-filters select').forEach(select => select.addEventListener('change', renderScholarships));
   renderScholarships();
 })();
 
 // AI Assistant widget (every page)
 (function(){
   // ---- Real data pulled straight from the site's own pages ----
-  const scholarships = [
+  const scholarships =   [
     {
-      name: "Chevening Scholarship",
-      country: "United Kingdom · Government-funded",
-      levels: ["Master's"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Opens annually in August, closes in October",
-      desc: "A one-year, fully funded UK master's degree for future leaders, run by the UK government.",
-      criteria: [
-        "Citizen of a Chevening-eligible country",
-        "At least 2 years (2,800 hours) of work experience",
-        "Undergraduate degree equivalent to a UK 2:1",
-        "Return home for 2 years after the award"
+      "name": "Europubhealth+ Erasmus Mundus Joint Master",
+      "country": "Europe · Eight-university public health consortium",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Offers from 3 eligible UK master's courses",
-        "Two references",
-        "Personal essays on leadership & career plans"
+      "field": "STEM & Health",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "8 January 2027 · 13:00 CET (Erasmus Mundus scholarship deadline)",
+      "verifiedOn": "5 November 2026",
+      "desc": "Two-year European Master in Public Health. The Erasmus Mundus scholarship is awarded to selected top-ranked applicants worldwide.",
+      "fundingDetail": "Up to €1,400 per month, full participation-fee coverage, and health and accident insurance. Awards are limited and highly competitive.",
+      "criteria": [
+        "Applicants from all nationalities may compete for Erasmus Mundus scholarships.",
+        "A relevant previous university degree and the programme's language requirements are required.",
+        "Selection considers academic results, public-health or healthcare experience, motivation, and international experience.",
+        "The consortium reports that fewer than 1% of applicants receive an Erasmus Mundus scholarship."
       ],
-      link: "https://www.chevening.org/"
+      "requirements": [
+        "Submit the complete application through the official Europubhealth+ application platform.",
+        "Provide degree documents, transcripts, and the required language-test evidence.",
+        "Read the 2027 applicant instructions and confirm the accepted degree backgrounds before applying."
+      ],
+      "link": "https://www.europubhealth.org/application-procedure/"
     },
     {
-      name: "Commonwealth Master's Scholarship",
-      country: "United Kingdom · Commonwealth Scholarship Commission",
-      levels: ["Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Commonwealth",
-      deadline: "Opens annually in November, closes in December",
-      desc: "Fully funded UK postgraduate study for students from developing Commonwealth countries, including Sierra Leone.",
-      criteria: [
-        "Citizen of an eligible Commonwealth country (Sierra Leone included)",
-        "First-class or upper-second-class first degree",
-        "Unable to fund study without this award",
-        "Committed to development impact at home"
+      "name": "Human Response — Erasmus Mundus Joint Master",
+      "country": "Portugal · Norway · Uganda and partner locations",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Admission offer from a UK university course",
-        "Academic transcripts & references",
-        "Statement of how the course supports development"
+      "field": "STEM & Health",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "7 January 2027 · scholarship application deadline",
+      "verifiedOn": "5 November 2026",
+      "desc": "A two-year joint Master's focused on coordinated humanitarian response, health, and displacement. Particularly relevant to public health and humanitarian work.",
+      "fundingDetail": "15 Erasmus Mundus scholarships per edition. Each scholarship provides €1,400 per month, no tuition fees for scholarship holders, and 24-month insurance. Travel, housing, living, and visa costs still need careful planning.",
+      "criteria": [
+        "A Bachelor's degree equivalent to at least 180 ECTS is required.",
+        "Applicants must meet the programme's English-language requirements.",
+        "Previous Erasmus Mundus Joint Master scholarship holders cannot receive another EMJM scholarship."
       ],
-      link: "https://cscuk.fcdo.gov.uk/"
+      "requirements": [
+        "Passport, photograph, degree certificate, and full academic transcript.",
+        "CV, statement of purpose, and two signed recommendation letters.",
+        "English test certificate unless an official exemption applies. IELTS Academic minimum: 6.5 overall, no band below 5.5; other accepted tests have their own minimums."
+      ],
+      "link": "https://humanresponse.eu/applications1/"
     },
     {
-      name: "Mastercard Foundation Scholars Program",
-      country: "Multiple partner universities · Africa-focused",
-      levels: ["Undergraduate", "Master's"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Africa",
-      deadline: "Deadlines vary by partner university",
-      desc: "Africa's largest scholarship initiative, covering tuition and living costs for talented students with limited financial means.",
-      criteria: [
-        "African national",
-        "Under 29 for undergraduate, under 35 for master's",
-        "Demonstrated financial need",
-        "Record of leadership or community service"
+      "name": "EMMIR — European Master in Migration and Intercultural Relations",
+      "country": "Europe · Eight partner institutions",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Admission to a Mastercard Foundation partner university",
-        "Academic transcripts",
-        "Personal statement on community impact"
+      "field": "Business & Social Science",
+      "funding": "Partial funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "20 December 2026 · scholarship and non-fee-paying places",
+      "verifiedOn": "5 November 2026",
+      "desc": "A two-year Erasmus Mundus Master's on migration and intercultural relations. It may suit applicants interested in migration, social policy, community health, and development.",
+      "fundingDetail": "The programme confirms scholarship and non-fee-paying study places for this intake. Check the official funding information for the exact award and conditions; do not assume all living costs are covered.",
+      "criteria": [
+        "The 2027–2029 application round is open to international applicants.",
+        "Applicants must meet the programme's academic and language entry requirements.",
+        "The programme makes the final eligibility decision after reviewing a complete application."
       ],
-      link: "https://mastercardfdn.org/en/programs/young-people-thriving/scholars-program/"
+      "requirements": [
+        "Follow the official application procedure and read the entry requirements.",
+        "Prepare degree certificates, transcripts, CV, motivation statement, and language evidence as specified by the programme."
+      ],
+      "link": "https://www.emmir.org/applications"
     },
     {
-      name: "Fulbright Foreign Student Program",
-      country: "United States · Government-funded",
-      levels: ["Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Opens annually early in the year; check your local commission",
-      desc: "Fully funded graduate study and research in the United States, run through local Fulbright commissions and U.S. embassies worldwide.",
-      criteria: [
-        "Bachelor's degree completed before travel",
-        "Strong academic record in your field",
-        "English proficiency (TOEFL/IELTS)",
-        "Intent to return home after the program"
+      "name": "Imperial College London — School of Public Health Master's Scholarships",
+      "country": "United Kingdom · Imperial College London",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Study/research proposal",
-        "Academic & professional references",
-        "Standardised test scores where required"
+      "field": "STEM & Health",
+      "funding": "Partial funding",
+      "region": "Global",
+      "status": "Open",
+      "deadline": "30 April 2027 · 23:59 UK time",
+      "verifiedOn": "5 November 2026",
+      "desc": "Five 2027-entry awards across Public Health, Epidemiology, Health Data Analytics and Machine Learning, and the online MPH.",
+      "fundingDetail": "On-campus awards cover tuition up to the UK home-fee rate; overseas students pay any remaining fee balance. One online MPH award covers the full tuition fee for either home or overseas students. Living costs are not included.",
+      "criteria": [
+        "Open to applicants from the UK, EU, and overseas.",
+        "You must first apply to an eligible School of Public Health Master's programme for October 2027 entry.",
+        "Selection considers financial need, academic potential, relevant experience, references, and career plans.",
+        "The scholarship does not require every applicant to have a first-class degree; course admission requirements still apply."
       ],
-      link: "https://foreign.fulbrightonline.org/"
+      "requirements": [
+        "Submit the eligible Master's course application first.",
+        "Complete the separate School of Public Health scholarship application.",
+        "For MSc Health Data Analytics and Machine Learning, check the course's stated academic entry standard before applying."
+      ],
+      "link": "https://www.imperial.ac.uk/school-public-health/study/postgraduate/funding-and-scholarships/"
     },
     {
-      name: "Islamic University of Madinah Scholarship",
-      country: "Saudi Arabia · Government-funded",
-      levels: ["Undergraduate", "Master's"],
-      field: "Islamic & Arabic Studies",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Undergraduate: closes mid-June · Master's: rolling",
-      desc: "Fully funded study in Madinah covering tuition, furnished housing, a monthly stipend, and healthcare, for Islamic and Arabic studies.",
-      criteria: [
-        "Non-Saudi national",
-        "Aged 17–25 for undergraduate applicants",
-        "Good standing in previous studies",
-        "Willingness to relocate to Madinah, Saudi Arabia"
+      "name": "HDR UK Master's Scholarship Programme",
+      "country": "United Kingdom · Health Data Research UK",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Completed academic transcripts, attested",
-        "Passport copy & personal photos",
-        "Apply through the Study in Saudi platform"
+      "field": "STEM & Health",
+      "funding": "Partial funding",
+      "region": "Global",
+      "status": "Upcoming",
+      "deadline": "2027 applications expected around March 2027 · exact dates not yet announced",
+      "verifiedOn": "5 November 2026",
+      "desc": "Funding for UK Master's study in Health Data Science or a closely related programme with a significant health-data component.",
+      "fundingDetail": "Up to £10,000 paid towards tuition fees. It does not cover international fee differences or living costs, so additional funding is needed.",
+      "criteria": [
+        "International students are welcome to apply.",
+        "Applicants need a confirmed place on an eligible UK Master's programme.",
+        "The programme must be in Health Data Science or closely related, with substantial health-data content."
       ],
-      link: "https://studyinsaudi.sa/en"
+      "requirements": [
+        "Secure a confirmed place on an eligible Master's programme.",
+        "Prepare a health-data research project proposal with an eligible charity or research partner as required by the scheme.",
+        "Check the 2027 guidance when applications open."
+      ],
+      "link": "https://www.hdruk.ac.uk/study-and-train/study/postgraduate/masters-programme/"
     },
     {
-      name: "King Abdulaziz University Scholarship",
-      country: "Saudi Arabia · Government-funded",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Applications accepted year-round via the Study in Saudi platform",
-      desc: "Fully funded study across engineering, business, humanities, IT and more, with a monthly stipend, accommodation, healthcare, and return airfare.",
-      criteria: [
-        "Non-Saudi national meeting programme entry requirements",
-        "Good academic standing in prior studies",
-        "Medical fitness to relocate to Jeddah, Saudi Arabia",
-        "Separate male and female campuses; check programme availability"
+      "name": "Commonwealth Master's Scholarship",
+      "country": "United Kingdom · Commonwealth Scholarship Commission",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Attested academic transcripts & certificates",
-        "Passport copy",
-        "Apply through the Study in Saudi platform"
+      "field": "Any field",
+      "funding": "Full funding",
+      "region": "Commonwealth",
+      "status": "Closed",
+      "deadline": "2027/28 applications closed · 20 October 2026",
+      "verifiedOn": "5 November 2026",
+      "desc": "Fully funded taught Master's study in the UK for eligible citizens of developing Commonwealth countries. Sierra Leone is on the eligible-country list.",
+      "fundingDetail": "Commonwealth Master's awards are fully funded. Check the official award conditions for the exact support attached to the next application cycle.",
+      "criteria": [
+        "Sierra Leone is an eligible country.",
+        "Applicants must normally hold a first degree of at least upper-second-class (2:1) standard or an equivalent qualification.",
+        "Applicants must be unable to afford UK study without the award and demonstrate development impact."
       ],
-      link: "https://studyinsaudi.sa/en"
+      "requirements": [
+        "The 2027/28 application window has closed; prepare for a future cycle only after its dates and rules are announced.",
+        "For the next cycle, check the eligible-country list, academic classification, residency, and return-home requirements."
+      ],
+      "link": "https://cscuk.fcdo.gov.uk/scholarships/commonwealth-masters-scholarships/"
     },
     {
-      name: "KAUST Scholarship",
-      country: "Saudi Arabia · King Abdullah University of Science & Technology",
-      levels: ["Master's", "PhD"],
-      field: "STEM & Health",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Rolling admission rounds; apply early for full consideration",
-      desc: "Full tuition, a living allowance, on-campus housing, and medical coverage for graduate research in science, engineering, and technology.",
-      criteria: [
-        "Open to all nationalities",
-        "Bachelor's degree (for master's) or master's degree (for PhD) in a related field",
-        "English proficiency (TOEFL 79+ or IELTS 6.5+)",
-        "Meets entry requirements of the chosen research programme"
+      "name": "Chevening Scholarship — Sierra Leone",
+      "country": "United Kingdom · UK Government",
+      "levels": [
+        "Master's"
       ],
-      requirements: [
-        "Academic transcripts & references",
-        "Statement of research interest",
-        "Apply through the Study in Saudi platform"
+      "field": "Any field",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Closed",
+      "deadline": "2027/28 applications closed · next cycle not announced",
+      "verifiedOn": "5 November 2026",
+      "desc": "The UK Government's fully funded one-year Master's scholarship for future leaders. The official Sierra Leone page confirms the 2027/28 round is closed.",
+      "fundingDetail": "Chevening is a fully funded award. Check the official country page for the next cycle's exact benefits, eligibility, and dates.",
+      "criteria": [
+        "Sierra Leone has a dedicated Chevening scholarship country page.",
+        "Applicants must meet Chevening's current eligibility criteria, including its work-experience and course requirements.",
+        "The 2027/28 application round is closed."
       ],
-      link: "https://studyinsaudi.sa/en"
+      "requirements": [
+        "Do not submit through unofficial agents or third-party forms.",
+        "Monitor the official Sierra Leone page for the next opening date and updated rules."
+      ],
+      "link": "https://www.chevening.org/scholarship/sierra-leone/"
     },
     {
-      name: "Al-Azhar University Scholarship",
-      country: "Egypt · Government-funded",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Islamic & Arabic Studies",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Apply through your home country's Egyptian embassy; check the annual window",
-      desc: "One of the world's oldest Islamic institutions, offering full scholarships for Shariah, Quranic sciences, Hadith, Arabic and Islamic history, with a free preparatory Arabic course for non-Arabic speakers.",
-      criteria: [
-        "Muslim applicant from an eligible country",
-        "Undergraduate: 18–25 years old · Master's: under 35",
-        "Good physical and mental health (medical certificate required)",
-        "Prior qualification in Shariah/Islamic studies for some tracks"
+      "name": "Türkiye Scholarships — Graduate Programme",
+      "country": "Türkiye · Government-funded",
+      "levels": [
+        "Master's",
+        "PhD"
       ],
-      requirements: [
-        "Application channelled through the Egyptian embassy or Islamic affairs council in your country",
-        "Attested certificates & proof of Islamic identity (letter from a mosque or Islamic centre)",
-        "Recommendation letters"
+      "field": "Any field",
+      "funding": "Full funding",
+      "region": "Global",
+      "status": "Upcoming",
+      "deadline": "Annual application window: 10 January–20 February; confirm the 2027 call when published",
+      "verifiedOn": "5 November 2026",
+      "desc": "Government scholarship for graduate study in Türkiye. Available graduate fields include social sciences, humanities, natural sciences, and engineering.",
+      "fundingDetail": "Includes university placement, tuition, monthly stipend, accommodation, health insurance, Turkish-language course, and a one-off flight ticket.",
+      "criteria": [
+        "Open to eligible international applicants; check the current nationality and age rules.",
+        "Available departments depend on the applicant's previous academic background.",
+        "Important: the official programme states that it does not award graduate scholarships in health sciences."
       ],
-      link: "https://azhar.eg/"
-    },
-    {
-      name: "Hamad Bin Khalifa University Scholarship",
-      country: "Qatar · HBKU, Education City, Doha",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Middle East & Gulf",
-      deadline: "Typically closes 1 February each year for international applicants",
-      desc: "Full or partial tuition coverage plus housing, airfare, and a monthly stipend, awarded automatically to admitted students — no separate scholarship application needed.",
-      criteria: [
-        "Open to all nationalities",
-        "Admission offer to an HBKU undergraduate, master's, PhD, or law programme",
-        "Strong academic record",
-        "English proficiency (IELTS or equivalent, where required)"
+      "requirements": [
+        "Prepare passport, diploma, transcripts, and any required language or programme documents.",
+        "Use the official Türkiye Scholarships application system during the published application period.",
+        "Check whether the selected department accepts your previous degree."
       ],
-      requirements: [
-        "Complete university admission application first",
-        "Academic transcripts",
-        "Personal statement & recommendation letter"
-      ],
-      link: "https://www.hbku.edu.qa/"
-    },
-    {
-      name: "American University of Sharjah Scholarship",
-      country: "United Arab Emirates · Merit-based",
-      levels: ["Undergraduate", "Master's"],
-      field: "Any field",
-      funding: "Partial funding",
-      region: "Middle East & Gulf",
-      deadline: "Priority deadlines each admission cycle; apply early",
-      desc: "Merit-based tuition discounts of roughly 20–80% for high-achieving students across engineering, business, arts, and more, on a modern UAE campus.",
-      criteria: [
-        "Open to all nationalities",
-        "Strong secondary school or undergraduate academic record",
-        "Admission offer to AUS required first",
-        "Renewable each year if grades are maintained"
-      ],
-      requirements: [
-        "Academic transcripts",
-        "Standardised test scores where applicable",
-        "Online scholarship application after admission"
-      ],
-      link: "https://www.aus.edu/"
-    },
-    {
-      name: "DAAD Scholarship",
-      country: "Germany · German Academic Exchange Service",
-      levels: ["Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Deadlines vary by programme; most close 6–12 months before the start date",
-      desc: "Germany's national academic exchange agency funds postgraduate study and research, with a monthly stipend, health insurance, and a travel allowance.",
-      criteria: [
-        "Completed a first degree (bachelor's) before the programme begins",
-        "Strong academic record",
-        "German or English language proficiency, depending on the programme",
-        "Some programmes set an age limit (around 32 for master's, 36 for PhD)"
-      ],
-      requirements: [
-        "Search the DAAD scholarship database for a matching programme",
-        "University admission or nomination, depending on the programme",
-        "Transcripts, references, and a motivation letter"
-      ],
-      link: "https://www.daad.de/en/studying-in-germany/scholarships/daad-scholarships/"
-    },
-    {
-      name: "Türkiye Bursları (Turkey Scholarships)",
-      country: "Turkey · Government-funded",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Opens annually, typically January to February",
-      desc: "A fully funded Turkish government programme covering tuition, a monthly stipend, accommodation, health insurance, a Turkish language course, and a return flight.",
-      criteria: [
-        "Open to citizens of almost every country (not Turkish nationals)",
-        "Undergraduate: generally under 21 with strong secondary school grades",
-        "Master's/PhD: strong first degree, generally under 30 for master's",
-        "Not already enrolled at a Turkish university at the same level"
-      ],
-      requirements: [
-        "Apply online through the Türkiye Bursları portal",
-        "Identity document, diploma, and transcripts",
-        "Language test scores where the chosen programme requires them"
-      ],
-      link: "https://www.turkiyeburslari.gov.tr/"
-    },
-    {
-      name: "Chinese Government Scholarship (CSC)",
-      country: "China · China Scholarship Council",
-      levels: ["Undergraduate", "Master's", "PhD"],
-      field: "Any field",
-      funding: "Full funding",
-      region: "Global",
-      deadline: "Varies by route — embassy applications typically close by April",
-      desc: "A fully funded programme covering tuition, accommodation or a housing allowance, basic health insurance, and a monthly stipend, at partner universities across China.",
-      criteria: [
-        "Non-Chinese citizen in good health",
-        "Undergraduate: generally under 25 · Master's: under 35 · PhD: under 40",
-        "Good academic standing",
-        "Not holding another Chinese-government-funded scholarship at the same time"
-      ],
-      requirements: [
-        "Apply via a Chinese embassy (Type A) or directly to a partner university (Type B)",
-        "Notarised transcripts and highest diploma",
-        "Foreigner Physical Examination Form and passport copy"
-      ],
-      link: "https://www.chinesescholarshipcouncil.com/"
+      "link": "https://www.turkiyeburslari.gov.tr/fulltimeprograms"
     }
   ];
 
-  const scholarshipAliases = [
-    { name: "Chevening Scholarship", keys: ["chevening"] },
-    { name: "Commonwealth Master's Scholarship", keys: ["commonwealth"] },
-    { name: "Mastercard Foundation Scholars Program", keys: ["mastercard"] },
-    { name: "Fulbright Foreign Student Program", keys: ["fulbright"] },
-    { name: "Islamic University of Madinah Scholarship", keys: ["madinah","islamic university"] },
-    { name: "King Abdulaziz University Scholarship", keys: ["king abdulaziz","kau scholarship"] },
-    { name: "KAUST Scholarship", keys: ["kaust"] },
-    { name: "Al-Azhar University Scholarship", keys: ["al-azhar","al azhar","azhar"] },
-    { name: "Hamad Bin Khalifa University Scholarship", keys: ["hamad bin khalifa","hbku"] },
-    { name: "American University of Sharjah Scholarship", keys: ["sharjah"] },
-    { name: "DAAD Scholarship", keys: ["daad","germany scholarship","german scholarship"] },
-    { name: "Türkiye Bursları (Turkey Scholarships)", keys: ["turkiye","türkiye","burslari","bursları","turkey scholarship"] },
-    { name: "Chinese Government Scholarship (CSC)", keys: ["csc","chinese government scholarship","china scholarship","study in china"] }
+  const scholarshipAliases =   [
+    {
+      "name": "Europubhealth+ Erasmus Mundus Joint Master",
+      "keys": [
+        "europubhealth",
+        "euro pub health"
+      ]
+    },
+    {
+      "name": "Human Response — Erasmus Mundus Joint Master",
+      "keys": [
+        "human response",
+        "humanitarian response",
+        "health and displacement"
+      ]
+    },
+    {
+      "name": "EMMIR — European Master in Migration and Intercultural Relations",
+      "keys": [
+        "emmir",
+        "migration and intercultural"
+      ]
+    },
+    {
+      "name": "Imperial College London — School of Public Health Master's Scholarships",
+      "keys": [
+        "imperial",
+        "health data analytics",
+        "imperial public health"
+      ]
+    },
+    {
+      "name": "HDR UK Master's Scholarship Programme",
+      "keys": [
+        "hdr uk",
+        "health data research uk",
+        "health data science scholarship"
+      ]
+    },
+    {
+      "name": "Commonwealth Master's Scholarship",
+      "keys": [
+        "commonwealth"
+      ]
+    },
+    {
+      "name": "Chevening Scholarship — Sierra Leone",
+      "keys": [
+        "chevening"
+      ]
+    },
+    {
+      "name": "Türkiye Scholarships — Graduate Programme",
+      "keys": [
+        "turkiye",
+        "türkiye",
+        "burslari",
+        "bursları",
+        "turkey scholarship"
+      ]
+    }
   ];
 
   const products = [
